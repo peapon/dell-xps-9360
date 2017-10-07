@@ -4,3 +4,4 @@
 * 显卡：HD 620
 * 无线网卡：BCM94352z
 * 蓝牙：BCM94352z
+* 操作系统：macOS High Sierra 10.13
