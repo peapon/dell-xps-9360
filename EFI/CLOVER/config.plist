@@ -42,8 +42,6 @@
 			<dict>
 				<key>#Comment-IRQ Fix</key>
 				<string>The following fixes may be needed for onboard audio/USB/etc</string>
-				<key>FixHeaders_20000000</key>
-				<true/>
 			</dict>
 			<key>Patches</key>
 			<array>
@@ -251,29 +249,70 @@
 		<string>dart=0 darkwake=0 nv_disable=1 kext-dev-mode=1 -disablegfxfirmware</string>
 		<key>DefaultVolume</key>
 		<string>macOS</string>
+		<key>Fast</key>
+		<true/>
 		<key>NeverHibernate</key>
 		<true/>
 		<key>Secure</key>
 		<false/>
-		<key>Timeout</key>
-		<integer>5</integer>
 		<key>XMPDetection</key>
 		<false/>
 	</dict>
 	<key>CPU</key>
 	<dict>
+		<key>HWPEnable</key>
+		<true/>
 		<key>UseARTFrequency</key>
 		<true/>
 	</dict>
 	<key>Devices</key>
 	<dict>
-		<key>#AddProperties</key>
+		<key>##AddProperties</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>Inject "name" as (data)"#display" to disable graphics drivers on NVidia</string>
+				<key>Device</key>
+				<string>NVidia</string>
+				<key>Key</key>
+				<string>name</string>
+				<key>Value</key>
+				<data>
+				I2Rpc3BsYXk=
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Inject "IOName" as "#display" to disable graphics drivers on NVidia</string>
+				<key>Device</key>
+				<string>NVidia</string>
+				<key>Key</key>
+				<string>IOName</string>
+				<key>Value</key>
+				<string>#display</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Inject bogus class-code to prevent graphics drivers loading for NVidia</string>
+				<key>Device</key>
+				<string>NVidia</string>
+				<key>Key</key>
+				<string>class-code</string>
+				<key>Value</key>
+				<data>
+				/////w==
+				</data>
+			</dict>
+		</array>
+		<key>AddProperties</key>
 		<array>
 			<dict>
 				<key>Comment</key>
 				<string>hda-gfx=onboard-1 for HDMI audio</string>
 				<key>Device</key>
 				<string>IntelGFX</string>
+				<key>Disabled</key>
+				<false/>
 				<key>Key</key>
 				<string>hda-gfx</string>
 				<key>Value</key>
@@ -286,6 +325,8 @@
 				<string>hda-gfx=onboard-1 for HDMI audio</string>
 				<key>Device</key>
 				<string>HDA</string>
+				<key>Disabled</key>
+				<false/>
 				<key>Key</key>
 				<string>hda-gfx</string>
 				<key>Value</key>
@@ -298,34 +339,25 @@
 				<string>layout-id=3</string>
 				<key>Device</key>
 				<string>HDA</string>
+				<key>Disabled</key>
+				<false/>
 				<key>Key</key>
 				<string>layout-id</string>
 				<key>Value</key>
-				<data>
-				AwAAAA==
-				</data>
-			</dict>
-			<dict>
-				<key>Device</key>
-				<string>HDA</string>
-				<key>Key</key>
-				<string>PinConfigurations</string>
-				<key>Value</key>
-				<data>
-				</data>
+				<integer>13</integer>
 			</dict>
 		</array>
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
-			<integer>0</integer>
+			<string>13</string>
 		</dict>
 		<key>FakeID</key>
 		<dict>
 			<key>#Kaby Lake-Comment</key>
-			<string>Kaby Lake HD620 graphics supportable by using Skylake device-id</string>
+			<string>To avoid automatic Clover fake device-id (Skylake) injection</string>
 			<key>IntelGFX</key>
-			<string>0x19168086</string>
+			<string>0x59168086</string>
 		</dict>
 		<key>USB</key>
 		<dict>
@@ -343,8 +375,6 @@
 	</array>
 	<key>GUI</key>
 	<dict>
-		<key>#ScreenResolution</key>
-		<string>1920x1080</string>
 		<key>Custom</key>
 		<dict>
 			<key>Entries</key>
@@ -393,26 +423,17 @@
 			<key>Tool</key>
 			<true/>
 		</dict>
+		<key>ScreenResolution</key>
+		<string>1920x1080</string>
 		<key>Theme</key>
-		<string>El Capitan</string>
+		<string>clover-theme-minimal</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
 		<key>EDID</key>
 		<dict>
-			<key>Custom</key>
-			<data>
-			AP///////wBNEEkUAAAAACAZAQSlHRF4Dt5Qo1RMmSYPUFQAAAAB
-			AQEBAQEBAQEBAQEBAQEBGjaAoHA4H0AwIDUAJqUQAAAYAAAAEAAA
-			AAAAAAAAAAAAAAAAAAAA/gBESkNQNoBMUTEzM00xAAAAAAACQQMo
-			ABIAAAsBCiAgAGY=
-			</data>
 			<key>Inject</key>
-			<true/>
-			<key>ProductID</key>
-			<string>5193</string>
-			<key>VendorID</key>
-			<string>19728</string>
+			<false/>
 		</dict>
 		<key>Inject</key>
 		<dict>
@@ -424,35 +445,88 @@
 			<false/>
 		</dict>
 		<key>ig-platform-id</key>
-		<string>0x19160000</string>
+		<string>0x591b0000</string>
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
-		<key>#Kaby Lake-Comment</key>
-		<string>Kaby Lake CPU supportable by using CPUID from Skylake</string>
 		<key>AppleIntelCPUPM</key>
 		<false/>
 		<key>AppleRTC</key>
 		<false/>
 		<key>DellSMBIOSPatch</key>
 		<false/>
-		<key>KernelCpu</key>
-		<false/>
+		<key>ForceKextsToLoad</key>
+		<array>
+			<string>\System\Library\Extensions\IONetworkingFamily.kext</string>
+		</array>
 		<key>KernelLapic</key>
 		<false/>
 		<key>KernelPm</key>
 		<false/>
+		<key>KernelToPatch</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>MSR 0xE2 _xcpm_idle instant reboot(c) Pike R. Alpha</string>
+				<key>Disabled</key>
+				<false/>
+				<key>Find</key>
+				<data>
+				ILniAAAADzA=
+				</data>
+				<key>Replace</key>
+				<data>
+				ILniAAAAkJA=
+				</data>
+			</dict>
+		</array>
 		<key>KextsToPatch</key>
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>10.13.x</string>
+				<string>0x591b0000, 32MB BIOS, 19MB framebuffer 9MB cursor bytes (credit RehabMan)</string>
+				<key>Disabled</key>
+				<false/>
+				<key>Find</key>
+				<data>
+				AABgAgAAUAE=
+				</data>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelKBLGraphicsFramebuffer</string>
+				<key>Replace</key>
+				<data>
+				AAAwAQAAkAA=
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>0x591b0000, 0105 instead of 0306, HDMI</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Find</key>
+				<data>
+				AgQKAAAIAACHAQAAAwYKAAAEAACHAQAA/wAAAAEAAAAg
+				AAAA
+				</data>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelKBLGraphicsFramebuffer</string>
+				<key>Replace</key>
+				<data>
+				AQUKAAAIAACHAQAAAgQKAAAIAACHAQAA/wAAAAEAAAAg
+				AAAA
+				</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>10.13+第二阶段花屏</string>
 				<key>Disabled</key>
 				<false/>
 				<key>Find</key>
 				<data>
 				AQAAdSI=
 				</data>
+				<key>MatchOS</key>
+				<string>10.13.x</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Replace</key>
@@ -476,70 +550,6 @@
 				RiV1VHh4eHgA
 				</data>
 			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>0x19160000/etc, 32MB BIOS, 19MB framebuffer 9MB cursor bytes (credit RehabMan)</string>
-				<key>Disabled</key>
-				<false/>
-				<key>Find</key>
-				<data>
-				AAAgAgAAUAE=
-				</data>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
-				<key>Replace</key>
-				<data>
-				AAAwAQAAkAA=
-				</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>eDP, port 0000, 0x191e0000, 0x19160000, 0x19260000, 0x19270000, 0x191b0000, 0x19160002, 0x19260002, 0x191e0003, 0x19260004, 0x19270004, 0x193b0005 credit syscl</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>
-				AAAIAAIAAACYAAAAAQUJAAAEAAA=
-				</data>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
-				<key>Replace</key>
-				<data>
-				AAAIAAAEAACYAAAAAQUJAAAEAAA=
-				</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable lid wake for 0x19260002 credit syscl/lighting/Yating Zhou</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>
-				ChMDAAAABgAAAAAAAAAAAA==
-				</data>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
-				<key>Replace</key>
-				<data>
-				DxMDAAAABgAAAAAAAAAAAA==
-				</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable lid wake for 0x19260004 credit syscl/lighting/Yating Zhou</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>
-				CgsDAAAHBgADAAAABAAAAA==
-				</data>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelSKLGraphicsFramebuffer</string>
-				<key>Replace</key>
-				<data>
-				DwsDAAAHBgADAAAABAAAAA==
-				</data>
-			</dict>
 		</array>
 	</dict>
 	<key>RtVariables</key>
@@ -548,6 +558,10 @@
 		<string>0x28</string>
 		<key>CsrActiveConfig</key>
 		<string>0x67</string>
+		<key>ROM</key>
+		<data>
+		UkoMOEgy
+		</data>
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
@@ -562,7 +576,7 @@
 		<key>BoardManufacturer</key>
 		<string>Apple Inc.</string>
 		<key>BoardSerialNumber</key>
-		<string>C02729310GUF503JC</string>
+		<string>C02737405OPF652A8</string>
 		<key>BoardType</key>
 		<integer>10</integer>
 		<key>BoardVersion</key>
@@ -590,9 +604,9 @@
 		<key>ProductName</key>
 		<string>MacBookPro14,2</string>
 		<key>ProductName-Comment</key>
-		<string>Using Haswell MacBookAir6,2 until Clover has support for Skylake identifiers</string>
+		<string>Using Haswell MacBookAir6,2 until Clover has support for KabyLake identifiers</string>
 		<key>SerialNumber</key>
-		<string>C02V327PHV2N</string>
+		<string>C02VDVLUHV2N</string>
 		<key>Version</key>
 		<string>1.0</string>
 	</dict>
@@ -602,6 +616,8 @@
 		<integer>0</integer>
 		<key>BacklightLevel</key>
 		<string>0</string>
+		<key>CustomUUID</key>
+		<string>44454C4C-3400-1059-8046-B2C04F384832</string>
 		<key>InjectKexts</key>
 		<string>Detect</string>
 	</dict>
