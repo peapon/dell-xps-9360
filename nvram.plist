@@ -14,9 +14,17 @@
 	<data>
 	AQ==
 	</data>
+	<key>SystemAudioVolume</key>
+	<data>
+	QA==
+	</data>
+	<key>SystemAudioVolumeDB</key>
+	<data>
+	8w==
+	</data>
 	<key>backlight-level</key>
 	<data>
-	AAA=
+	bAU=
 	</data>
 	<key>bluetoothActiveControllerInfo</key>
 	<data>
@@ -32,7 +40,7 @@
 	</data>
 	<key>fakesmc-key-#KEY-ui32</key>
 	<data>
-	AAAAEg==
+	AAAAEQ==
 	</data>
 	<key>fakesmc-key-$Adr-ui32</key>
 	<data>
