@@ -11,6 +11,9 @@
 ## APFS
 10.13中使用了Apple filesystem，所以需要apfs.efi作为驱动来启动，我的来源还是来源于tonymacx86，虽然库里有，我还是给原文链接[APFS](https://www.tonymacx86.com/tmx/apfs.efi)，文件下载后放到/EFI/CLOVER/drivers64UEFI/
 
+## 升级10.13.3
+系统内置的升级总是出现kernel panic，我也没有调查具体的原因，我在黑果小兵那里找了一个10.13.3的U盘安装镜像有痛升级，调整后的EFI是2018-2-20提交的版本，需要的可以获取
+
 
 
 
